@@ -54,7 +54,12 @@
                         </div>
                     </div>
                 </td>
-                <td class="message"><div class="message-content"><div>#{{ post.id }}</div><div>{{ post.message | raw }}</div></div></td>
+                <td class="message">
+                    <div class="message-content">
+                        <div>{{ post.message | raw }}</div>
+                        <div>#{{ post.id }}</div>
+                    </div>
+                </td>
                 <td class="fixed">
                     {% if app.user and app.user == post.author %}
                         <a class="warning" href="{{ path('post_edit', {'id':post.id}) }}" uk-icon="icon: file-edit"></a> <a class="danger" href="{{ path('post_delete', {'id': post.id}) }}" uk-icon="icon: trash"></a>
