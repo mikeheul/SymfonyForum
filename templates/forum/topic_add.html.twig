@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ topic }}{% endblock %}
+
+{% block body %}
+
+<h1>Add topic</h1>
+
+<div>
+    {{ form_start(form_addTopic) }}
+        {{ form_widget(form_addTopic.title) }}
+        <div>
+            {{ form_widget(form_addTopic.add_topic) }} <a href="{{ path('home') }}">{{ form_widget(form_addTopic.cancel) }}</a>
+        </div>
+    {{ form_end(form_addTopic) }}
+</div>
+
+{% endblock %}

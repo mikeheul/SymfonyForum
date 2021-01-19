@@ -1,0 +1,161 @@
+html, body { 
+    min-height: 100%; margin: 0; 
+    /* background: url("https://www.xmple.com/wallpaper/red-linear-gradient-1920x1080-c2-ffa07a-b22222-a-225-f-14.svg") no-repeat center center fixed;  */
+    /* background-size:     cover; */
+    background-color: rgb(241, 241, 241);
+}
+
+#content {
+    min-height: 100%;
+}
+
+h1 {
+    color: rgb(248, 12, 103);
+    margin-top: 1em;
+}
+
+h2, h3 {
+    color: rgb(143, 143, 143);
+    margin-top: 0.5em;
+}
+
+table {
+    -webkit-box-shadow: 5px 8px 16px -2px rgba(0,0,0,0.20); 
+    box-shadow: 5px 8px 16px -2px rgba(0,0,0,0.20);
+    margin-top: 1em;
+}
+
+thead {
+    
+    /* background-color: rgb(63, 63, 63); */
+    background: rgb(176,0,77);
+    background: linear-gradient(90deg, rgba(176,0,77,1) 0%, rgba(179,122,152,1) 100%);
+}
+
+th {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+    color: rgb(231, 231, 231) !important;
+}
+
+footer{
+    padding: 30px; 
+    text-align: center;
+    background-color: rgb(238, 238, 238);
+}
+
+#pseudo {
+    color:rgb(248, 12, 103);
+}
+
+
+
+.flash-success {
+    background-color: rgb(144, 238, 144);
+    color: rgb(7, 116, 16);
+    padding: 2em;
+}
+
+.link {
+    color:rgb(87, 87, 87);
+}
+
+.link:hover {
+    text-decoration: none;
+    color:rgb(102, 102, 102);
+}
+
+.danger {
+    color: red;
+}
+
+.warning {
+    color: orange;
+}
+
+.success {
+    color: green;
+}
+
+.uk-badge-success {
+    background-color: green;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.uk-badge-warning {
+    background-color: rgb(221, 79, 13);
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.uk-badge-gray {
+    background-color: rgb(143, 143, 143);
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.uk-table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgb(235, 235, 235);
+}
+
+.uk-table-striped > tbody > tr:nth-of-type(even) {
+    background-color: rgb(255, 255, 255);
+}
+
+.solved {
+    background-color: rgb(200, 245, 200) !important;
+}
+
+.main-author {
+    display: flex;
+}
+
+.main-author:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.main-author > div {
+    margin: 0 20px 0 0;
+}
+
+.small-font {
+    font-size: medium;
+}
+
+.medium-font {
+    font-size: large;
+}
+
+.fixed {
+    width: 300px;
+}
+
+.dotted {
+    border-right: 1px dotted gray;
+}
+
+.avatar {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.avatar-small {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+}
+
+.message {
+    padding-left: 1em !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}

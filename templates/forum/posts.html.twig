@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TOPIC | {{ topic }}{% endblock %}
+
+{% block body %}
+
+<h1 class="mb-0">{{ topic }}
+        {% if topic.solved %}
+            <span class="uk-badge uk-badge-success">Solved</span>
+        {% endif %}
+        {% if topic.closed %}
+            <span class="uk-badge uk-badge-warning">Closed</span>
+        {% endif %}
+
+        {% if topic.author.id == app.user.id %}
+            {% if topic.solved %}
+                <a class="uk-badge uk-badge-warning" href="">Mark as unresolved</a>
+            {% else %}
+                <a class="uk-badge uk-badge-success" href="">Mark as resolved</a>
+            {% endif %}
+            
+            {% if topic.closed %}
+                <a class="uk-badge uk-badge-success" href="">Open topic</a>
+            {% else %}
+                <a class="uk-badge uk-badge-warning" href="">Close topic</a>
+            {% endif %}
+        {% endif %}
+</h1>
+
+<p class="mt-0"><img class="avatar-small" src="{{ topic.author.avatar }}" alt=""> {{ topic.infos }}</p>
+<span uk-icon="icon: chevron-left"></span><a href="{{ path('home') }}">Back to the topics</a>
+
+<h2>Posts <span class="uk-badge uk-badge-gray">{{ topic.posts | length }}</span></h2>
+
+<table id="posts" class="uk-table uk-table-striped uk-table-responsive">
+    <thead>
+        <tr>
+            <th>FROM / AT</th>
+            <th>MESSAGE</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in topic.posts %}
+            <tr>
+                <td class="fixed dotted">
+                    <div class="main-author">
+                        <div><img class="avatar" src="{{ post.author.avatar }}" alt=""></div>
+                        <div>
+                            <a href="{{ path('user_show', {'id':post.author.id}) }}">{{ post.author }}</a> <br>
+                            <span class="small-font">{{ post.createdAt | date('d-m-Y H:i') }}</span> <br>
+                            <span class="small-font">Posts : {{ post.author.posts | length }}</span> - 
+                            <span class="small-font">Topics : {{ post.author.topics | length }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="message"><span class="uk-align-right">#{{ post.id }}</span>{{ post.message | raw }}</td>
+                <td class="fixed">
+                    {% if app.user and app.user == post.author %}
+                        <a class="warning" href="{{ path('post_edit', {'id':post.id}) }}" uk-icon="icon: file-edit"></a> <a class="danger" href="{{ path('post_delete', {'id': post.id}) }}" uk-icon="icon: trash"></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if app.user %}
+    <h3><span uk-icon="icon: reply; ratio: 1.2"></span> Post a Reply</h3>
+    <div>
+        {% if topic.closed == false %}
+            {{ form_start(form_addPost, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_errors(form_addPost) }}
+                {{ form_widget(form_addPost.message) }}
+                {{ form_widget(form_addPost.reply) }}
+            {{ form_end(form_addPost) }}
+        {% else %}
+            <span class="uk-badge uk-badge-warning">Topic is closed !</span>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

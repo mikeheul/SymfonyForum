@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HOME{% endblock %}
+
+{% block body %}
+
+<h1>Home</h1>
+
+<h2>Topics</h2>
+
+{# <a class="uk-button uk-button-secondary uk-margin-bottom" href="{{ path('topic_add') }}">Add topic</a> #}
+
+<table class="uk-table uk-table-striped uk-table-responsive">
+    <thead>
+        <tr>
+            <th>STATE</th>
+            <th>TITLE</th>
+            <th>REPLIES</th>
+            <th>LAST POST</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set class = "" %}
+        {% for topic in topics %}
+            {% set class = (topic.solved) ? "solved" : "" %}
+
+            <tr class="{{ class }}">
+                <td>
+                    {% if topic.closed %}
+                        <span class="danger" uk-icon="lock"></span>
+                    {% else %}
+                        <span class="success" uk-icon="unlock"></span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="link medium-font" href="{{ path('posts', {'id': topic.id}) }}"><strong>{{ topic }}</strong></a><br>
+                    <span class="small-font"><span uk-icon="icon: user; ratio: 0.8;"></span> By <a href="{{ path('user_show', {'id':topic.author.id}) }}">{{ topic.author }}</a>
+                    <span uk-icon="icon: calendar; ratio: 0.8;"></span> {{ topic.createdAt | date('d-m-Y') }} <span uk-icon="icon: clock; ratio: 0.8;"></span> {{ topic.createdAt | date('H:i') }}</span>
+                </td>
+                <td><span class="uk-badge uk-badge-gray">{{ topic.posts | length }}</span></td>
+                <td>By <a href="{{ path('user_show', {'id':topic.author.id}) }}">{{ topic.posts | last.author }}</a><br>{{ topic.posts | last.createdAt | date("d-m-Y H:i") }}</td>
+                <td>
+                    {% if app.user and topic.author == app.user %}
+                        {% if topic.closed %}
+                            <a class="success" href="{{ path('topic_close', {'id': topic.id}) }}" uk-icon="icon: unlock"></a>
+                        {% else %}
+                            <a class="danger lock" href="{{ path('topic_close', {'id': topic.id}) }}" uk-icon="icon: lock"></a>
+                        {% endif %}
+
+                        {% if topic.solved %}
+                            <a class="danger" href="{{ path('topic_unsolve', {'id': topic.id}) }}" uk-icon="icon: close"></a>
+                        {% else %}
+                            <a class="success" href="{{ path('topic_solve', {'id': topic.id}) }}" uk-icon="icon: check"></a>
+                        {% endif %}
+
+                        <a class="warning" href="" uk-icon="icon: file-edit"></a>
+                        <a class="danger" href="{{ path('topic_delete', {'id': topic.id}) }}" uk-icon="icon: trash"></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3><span uk-icon="icon: plus-circle"></span> Add topic</h3>
+
+{{ form(form_addTopic) }}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    
+    <h1><img class="avatar" src="{{ user.avatar }}" alt=""> {{ user }}</h1>
+    <div>
+        <p>
+            {{ user.email }} <br>
+            <strong>Topics :</strong> {{ user.topics | length }} <br> 
+            <strong>Posts :</strong> {{ user.posts | length }} <br>
+        </p>
+    </div>
+
+{% endblock %}

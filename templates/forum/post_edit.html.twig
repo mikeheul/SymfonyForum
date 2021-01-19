@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit post{% endblock %}
+
+{% block body %}
+
+<h1>Edit post</h1>
+
+<div>
+    {{ form_start(form_editPost) }}
+        {{ form_widget(form_editPost.message) }}
+        <div>
+            {{ form_widget(form_editPost.reply) }} <a href="{{ path('posts', {'id':post.topic.id}) }}">{{ form_widget(form_editPost.cancel) }}</a>
+        </div>
+    {{ form_end(form_editPost) }}
+</div>
+
+{% endblock %}

@@ -3,10 +3,103 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.10/dist/css/uikit.min.css" />
+            {# <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"> #}
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.uikit.min.css">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div>
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <li><a href="{{ path('home') }}">Home</a></li>
+                </ul>
+            </div>
+            <div class="uk-navbar-right">                
+                <ul class="uk-navbar-nav">
+                    {% if app.user %}
+                        <li><a id="pseudo" href=""><strong>{{ app.user }}</strong></a></li>
+                        <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}">Sign in</a></li>
+                        <li><a href="{{ path('app_register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        
+        <div id="content" class="uk-container uk-container-expand">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous">
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.10/dist/js/uikit.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.10/dist/js/uikit-icons.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.23/js/dataTables.uikit.min.js"></script>
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+            <script>
+                tinymce.init({
+                    selector: 'textarea',
+                    menubar: false,
+                    plugins: "link image code",
+                    toolbar: 'undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code',
+                    toolbar_location: 'bottom'
+                });
+            </script>
+            <script>
+                $(document).ready( function () {
+                    $('table').DataTable(
+                        {
+                            "pageLength": 7,
+                            "ordering": false
+                        }
+                    );
+                } );
+            </script>
+            <script>
+                $(".flash-success").each(function(){
+                    if($(this).text().length > 0){
+                        $(this).slideDown(500, function(){
+                            $(this).delay(3000).slideUp(500)
+                        })
+                    }
+                })
+            </script>
+
+            <script>
+                {# let lockButtons = document.querySelectorAll(".lock")
+                lockButtons.forEach(function(lock){
+                    lock.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        let url = lock.getAttribute("href")
+                        // console.log(url)
+
+                        // AJAX CALL
+                        fetch(url) // Promise
+                            .then(response => response.json())
+                            .then(closed => {
+                                lock.innerText = closed ? "<span class="danger" uk-icon="lock"></span>" : "<span class="danger" uk-icon="unlock"></span>"
+                            })
+                    })
+                }) #}
+                
+            </script>
+        {% endblock %}
     </body>
 </html>
